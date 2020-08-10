@@ -1,0 +1,5 @@
+defaultGroup=com.dfz.dubbo.activate.DefaultGroupActivateExt
+multiGroup=com.dfz.dubbo.activate.MultiGroupActivateExt
+withOrderOne=com.dfz.dubbo.activate.WithOrderOneActivateExt
+withOrderTwo=com.dfz.dubbo.activate.WithOrderTwoActivateExt
+withValue=com.dfz.dubbo.activate.WithValueActivateExt

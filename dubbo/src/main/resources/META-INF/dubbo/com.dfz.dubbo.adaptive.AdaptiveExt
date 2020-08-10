@@ -1,0 +1,3 @@
+dubbo=com.dfz.dubbo.adaptive.DubboAdaptiveExt
+cloud=com.dfz.dubbo.adaptive.CloudAdaptiveExt
+thrift=com.dfz.dubbo.adaptive.ThriftAdaptiveExt
