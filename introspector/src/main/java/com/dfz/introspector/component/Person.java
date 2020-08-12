@@ -25,6 +25,7 @@ public class Person {
     private String Name;
     private String aGe;
     private String BIrthday;
+    private Car car;
 
     public String getaddress() {
         return address;
@@ -72,6 +73,14 @@ public class Person {
 
     public void setBIrthday(String BIrthday) {
         this.BIrthday = BIrthday;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
     }
 
     public String setAbc(String BIrthday) {
