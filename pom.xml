@@ -41,6 +41,7 @@
         <module>annotation</module>
         <module>factorybean</module>
         <module>spring-async</module>
+        <module>introspector</module>
     </modules>
 
     <properties>
