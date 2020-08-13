@@ -116,4 +116,17 @@ public class Person {
     public final void setxyz3(String BIrthday) {
 
     }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "address='" + address + '\'' +
+                ", isCool=" + isCool +
+                ", rich=" + rich +
+                ", Name='" + Name + '\'' +
+                ", aGe='" + aGe + '\'' +
+                ", BIrthday='" + BIrthday + '\'' +
+                ", car=" + car +
+                '}';
+    }
 }
