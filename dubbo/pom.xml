@@ -12,8 +12,15 @@
     <artifactId>dubbo</artifactId>
 
     <dependencies>
+        <!-- alibaba dubbo -->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>dubbo</artifactId>-->
+<!--        </dependency>-->
+
+        <!-- apache dubbo -->
         <dependency>
-            <groupId>com.alibaba</groupId>
+            <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo</artifactId>
         </dependency>
         <dependency>

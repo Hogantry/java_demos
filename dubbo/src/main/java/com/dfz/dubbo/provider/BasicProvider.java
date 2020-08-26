@@ -1,11 +1,11 @@
 package com.dfz.dubbo.provider;
 
-import com.alibaba.dubbo.config.ServiceConfig;
+
 import com.dfz.dubbo.provider.api.IDemoService;
 import com.dfz.dubbo.provider.impl.DemoServiceImpl;
+import org.apache.dubbo.config.ServiceConfig;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * @ClassName BasicProvider
