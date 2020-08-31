@@ -43,6 +43,7 @@
         <module>spring-async</module>
         <module>introspector</module>
         <module>validator</module>
+        <module>lucene</module>
     </modules>
 
     <properties>
@@ -69,6 +70,7 @@
         <jackson.version>2.11.1</jackson.version>
         <jakarta.validation-api.version>3.0.0</jakarta.validation-api.version>
         <hibernate-validator.version>7.0.0.Alpha6</hibernate-validator.version>
+        <lucene.version>8.6.1</lucene.version>
     </properties>
 
     <dependencyManagement>
@@ -252,6 +254,18 @@
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-core</artifactId>
+                <version>${lucene.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-queryparser</artifactId>
+                <version>${lucene.version}</version>
             </dependency>
 
         </dependencies>
