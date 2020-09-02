@@ -5,11 +5,13 @@ import java.util.*;
 /**
  * @ClassName PropertyMain
  * @Description 运行可执行jar时，如果需要给jar中的main方法传递参数，在命令后面跟上参数即可，多个参数之间使用空格分隔。
- *              例如：java -jar Main.jar 1 2 3 4
- *              命令后使用-Dname=value方式可以设置jar包运行时的VM options参数，在程序中可使用System.getProperty(name)方式获取值
+ *              例如：java -jar Main.jar 1 2 3 4，这里参数即是程序的Program arguments
+ *
+ *              命令后使用-Dname=value方式可以设置jar包运行时的Environment variables参数，在程序中可使用System.getProperty(name)方式获取值
  *              System.getenv(name)可获取系统环境变量的值
- *              --server.port=8080 类似的参数是Springboot特别支持的启动参数类型，它会对这种类型的参数做相应的解析，java本身
- *              并不支持这种类型的参数
+ *
+ *              --server.port=8080 类似的参数是Springboot特别支持的启动参数类型，具体原理还是main方法的参数，只是Springboot
+ *              对它做了解析，如果未解析，则整个字符串都作为main方法的一个字符串参数
  *
  * @Author dfz
  * @Date 2019-07-22 17:01
