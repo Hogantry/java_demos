@@ -8,8 +8,9 @@ import java.net.URLStreamHandler;
 
 /**
  * @ClassName Main
- * @Description 用户自定义的ClassLoader，其默认的parent ClassLoader就是系统ClassLoader。
- *              user.dir 当前类（编译后的class文件）所在的目录（类所在包所在的目录）。
+ * @Description 用户自定义的ClassLoader，其默认的parent ClassLoader就是系统ClassLoader。继承关系如下
+ *              DIY classLoader -> AppClassLoader -> ExtClassLoader -> SystemClassLoader
+ *              user.dir 当前项目（编译后的class文件）所在的目录（类所在包所在的目录）。
  * @Author dfz
  * @Date 2019-09-02 09:15
  * @Version 1.0
