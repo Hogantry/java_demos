@@ -2,6 +2,8 @@ package com.dfz.classloader;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLStreamHandler;
@@ -25,19 +27,27 @@ public class Main {
      * @param args
      * @throws IOException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
 
-        URL[] urls = new URL[1];
-        URLStreamHandler streamHandler = null;
-        File classPath = new File(WEB_ROOT);
-        String repository = (new URL("file", null, classPath.getCanonicalPath() + File.separator)).toString() ;
-        System.out.println("web_root: " + WEB_ROOT + ";repository: " + repository);
-        urls[0] = new URL(null, repository, streamHandler);
-        ClassLoader loader = new URLClassLoader(urls);
-        while (loader.getParent() != null) {
-            System.out.println(loader.getParent());
-            loader = loader.getParent();
-        }
+//        URL[] urls = new URL[1];
+//        URLStreamHandler streamHandler = null;
+//        File classPath = new File(WEB_ROOT);
+//        String repository = (new URL("file", null, classPath.getCanonicalPath() + File.separator)).toString() ;
+//        System.out.println("web_root: " + WEB_ROOT + ";repository: " + repository);
+//        urls[0] = new URL(null, repository, streamHandler);
+//        ClassLoader loader = new URLClassLoader(urls);
+//        while (loader.getParent() != null) {
+//            System.out.println(loader.getParent());
+//            loader = loader.getParent();
+//        }
+
+        String classPath = "/Users/dfz/J2EE/java_demos/spring-autowired/target/classes/";
+        MyClassLoader myClassLoader = new MyClassLoader(classPath);
+        String clazzName = "com.dfz.spring.autowired.config.HelloConfig";
+        Class<?> loadClass = myClassLoader.loadClass(clazzName);
+        Method helloDao = loadClass.getDeclaredMethod("helloDao");
+        Object o = loadClass.newInstance();
+        Object invoke = helloDao.invoke(o);
     }
 
 }
