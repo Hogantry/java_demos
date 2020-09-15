@@ -39,13 +39,16 @@ public class IndexFiles {
         try {
             // 存储索引数据的目录
             Directory indexDirectory = FSDirectory.open(Paths.get(indexPath));
-            // 创建分析器
+            // 创建分词器
             Analyzer analyzer = new StandardAnalyzer();
+            // 索引写出工具的配置对象
             IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
             indexWriterConfig.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
 
+            // 创建索引的写出工具类。参数：索引的目录和配置信息
             IndexWriter indexWriter = new IndexWriter(indexDirectory, indexWriterConfig);
             indexDocs(indexWriter, docDir);
+            // 关闭
             indexWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,14 +74,17 @@ public class IndexFiles {
         try (InputStream inputStream = Files.newInputStream(file)) {
             // 创建一个新的空文档
             Document document = new Document();
-            // 添加字段
+            // 创建并添加字段信息。参数：字段的名称、字段的值、是否存储，这里选Store.YES代表存储到文档列表。Store.NO代表不存储
             Field pathField = new StringField("path", file.toString(), Field.Store.YES);
             document.add(pathField);
+            // 这里我们title字段需要用TextField，即创建索引又会被分词。StringField会创建索引，但是不会被分词
             TextField contentsField = new TextField("contents", new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)));
             document.add(contentsField);
             System.out.println("adding " + file);
             // 写文档
             indexWriter.addDocument(document);
+            // 提交
+            indexWriter.commit();
         }
     }
 
