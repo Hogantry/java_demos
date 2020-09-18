@@ -10,6 +10,9 @@ import java.io.IOException;
  * @author: DFZ
  * @description: 自定义ClassLoader在调用loadClass方法时，默认是只加载本类，并不会完成链接操作。在完成加载之后，如果使用该类了，则会自动使用
  *               自定义的类加载器去完成链接初始化等操作，并自动加载关联的类。
+ *
+ *               在本例中HelloConfig类强依赖HelloDao类，如果在路径下删除HelloDao类的话，执行loadClass(HelloConfig)方法是不会有问题的，
+ *               再次佐证了上述所说，loadClass方法只会完成加载操作，后续的链接初始化都是在使用该类时完成。
  * @date: 2020/9/15 08:43
  * @Copyright: 2020 www.ztzqzg.com Ltd. All rights reserved.
  * 注意：本内容仅限于中泰证券（上海）资产管理有限公司内部传阅，禁止外泄以及用于其他的商业项目

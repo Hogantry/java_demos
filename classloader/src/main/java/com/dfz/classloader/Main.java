@@ -41,6 +41,7 @@ public class Main {
 //            loader = loader.getParent();
 //        }
 
+        // 需要先编译好spring-autowired项目
         String classPath = "/Users/dfz/J2EE/java_demos/spring-autowired/target/classes/";
         MyClassLoader myClassLoader = new MyClassLoader(classPath);
         String clazzName = "com.dfz.spring.autowired.config.HelloConfig";
