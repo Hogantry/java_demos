@@ -74,8 +74,9 @@
         <httpclient.version>4.5.12</httpclient.version>
         <okhttp.version>3.14.9</okhttp.version>
         <jackson.version>2.11.1</jackson.version>
-        <jakarta.validation-api.version>3.0.0</jakarta.validation-api.version>
-        <hibernate-validator.version>7.0.0.Alpha6</hibernate-validator.version>
+        <jakarta.validation-api.version>2.0.2</jakarta.validation-api.version>
+        <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
+        <tomcat-embed-el.version>9.0.22</tomcat-embed-el.version>
         <lucene.version>8.6.1</lucene.version>
     </properties>
 
@@ -274,17 +275,23 @@
                 <version>${jackson.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>jakarta.validation</groupId>
-                <artifactId>jakarta.validation-api</artifactId>
-                <version>${jakarta.validation-api.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>jakarta.validation</groupId>-->
+<!--                <artifactId>jakarta.validation-api</artifactId>-->
+<!--                <version>${jakarta.validation-api.version}</version>-->
+<!--            </dependency>-->
 
 
             <dependency>
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-el</artifactId>
+                <version>${tomcat-embed-el.version}</version>
             </dependency>
 
             <dependency>
