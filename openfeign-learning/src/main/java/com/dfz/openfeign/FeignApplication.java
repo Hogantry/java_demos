@@ -1,11 +1,13 @@
 package com.dfz.openfeign;
 
 import com.dfz.openfeign.client.DemoClient;
+import com.dfz.openfeign.client.ParamClient;
 import com.dfz.openfeign.client.RequestLineClient;
 import feign.Feign;
 import feign.template.QueryTemplate;
 import feign.template.UriTemplate;
 
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,8 +29,23 @@ public class FeignApplication {
 //        System.out.println(result);
 
         feignFirstStep();
-
+//        testParam();
 //        testTemplate();
+
+    }
+
+    /**
+     * 测试@Param注解，及其编码
+     */
+    private static void testParam() {
+        ParamClient client = FeignClientFactory.create(ParamClient.class);
+        client.testParam(new String[]{"YourBatman", "fsx"});
+        System.err.println(" ------------------ ");
+        client.testParam2(Arrays.asList("1", "2", "3"));
+        System.err.println(" ------------------ ");
+
+        client.testParam3("/?YourBatman/");
+        System.err.println(" ------------------ ");
 
     }
 

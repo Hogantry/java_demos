@@ -12,6 +12,7 @@ import com.netflix.stats.distribution.DataDistribution;
 import com.netflix.stats.distribution.DataPublisher;
 
 import java.net.URI;
+import java.sql.Time;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -35,7 +36,8 @@ public class RibbonClientApplication {
 //        serverStatsTest();
 //        loadBalancerStatsTest();
 //        abstractServerPredicateTest();
-        baseLoaderBalancerTest();
+//        baseLoaderBalancerTest();
+        zoneAwareLoaderBalancerTest();
     }
 
     private static void testRibbonClient() throws Exception {
@@ -59,15 +61,93 @@ public class RibbonClientApplication {
     /**
      * ribbon 配置类的默认值的设置，默认使用Archaius框架，其默认加载config.properties配置文件。至于如何加载环境变量或启动时参数，
      * 请查看Archaius框架的代码
+     *
+     * 注意：DefaultClientConfigImpl类中的动态属性只支持{client.namespacename.key}的形式，当在配置文件中配置{client.key}的值时，
+     * 通过DefaultClientConfigImpl.getProperty可以获取到值，但是不支持动态修改，必须配置成完整的{client.namespacename.key}的形式，才
+     * 支持动态修改，程序动态感知。
      */
-    private static void buildConfigTest() {
+    private static void buildConfigTest() throws InterruptedException {
         DefaultClientConfigImpl config = DefaultClientConfigImpl.getClientConfigWithDefaultValues("DFZ");
-        System.out.println(config.getClientName());
-        System.out.println(config.get(CommonClientConfigKey.ConnectTimeout));
+//        System.out.println(config.getClientName());
+//        System.out.println(config.get(CommonClientConfigKey.ConnectTimeout));
 
-        DefaultClientConfigImpl config2 = DefaultClientConfigImpl.getClientConfigWithDefaultValues("LHR");
-        System.out.println(config2.getClientName());
-        System.out.println(config2.get(CommonClientConfigKey.ConnectTimeout));
+        System.out.println(config.getProperty(new IClientConfigKey<String>() {
+            @Override
+            public String key() {
+                return "name";
+            }
+
+            @Override
+            public Class<String> type() {
+                return String.class;
+            }
+        }));
+        System.out.println(config.getProperty(new IClientConfigKey<String>() {
+            @Override
+            public String key() {
+                return "age";
+            }
+
+            @Override
+            public Class<String> type() {
+                return String.class;
+            }
+        }));
+
+        TimeUnit.SECONDS.sleep(40);
+
+        System.out.println(config.getProperty(new IClientConfigKey<String>() {
+            @Override
+            public String key() {
+                return "name";
+            }
+
+            @Override
+            public Class<String> type() {
+                return String.class;
+            }
+        }));
+        System.out.println(config.getProperty(new IClientConfigKey<String>() {
+            @Override
+            public String key() {
+                return "age";
+            }
+
+            @Override
+            public Class<String> type() {
+                return String.class;
+            }
+        }));
+
+        TimeUnit.SECONDS.sleep(70);
+
+        System.out.println(config.getProperty(new IClientConfigKey<String>() {
+            @Override
+            public String key() {
+                return "name";
+            }
+
+            @Override
+            public Class<String> type() {
+                return String.class;
+            }
+        }));
+        System.out.println(config.getProperty(new IClientConfigKey<String>() {
+            @Override
+            public String key() {
+                return "age";
+            }
+
+            @Override
+            public Class<String> type() {
+                return String.class;
+            }
+        }));
+
+
+//        DefaultClientConfigImpl config2 = DefaultClientConfigImpl.getClientConfigWithDefaultValues("LHR");
+//        System.out.println(config2.getClientName());
+//        System.out.println(config2.get(CommonClientConfigKey.ConnectTimeout));
     }
 
     /**
@@ -220,6 +300,7 @@ public class RibbonClientApplication {
         ILoadBalancer lb = new BaseLoadBalancer();
         lb.addServers(serverList);
 
+
         // 把华北的机器都标记为down掉
 //        LoadBalancerStats loadBalancerStats = ((BaseLoadBalancer) lb).getLoadBalancerStats();
 //        loadBalancerStats.updateServerList(serverList); // 这一步不能省哦~~~
@@ -239,6 +320,27 @@ public class RibbonClientApplication {
         }
     }
 
+    public static void zoneAwareLoaderBalancerTest() {
+        List<Server> serverList = new ArrayList<>();
+        serverList.add(createServer("华南", 1));
+        serverList.add(createServer("华东", 1));
+        serverList.add(createServer("华东", 2));
+
+        serverList.add(createServer("华北", 1));
+        serverList.add(createServer("华北", 2));
+        serverList.add(createServer("华北", 3));
+        serverList.add(createServer("华北", 4));
+        AbstractLoadBalancer lb = new ZoneAwareLoadBalancer();
+        lb.addServers(serverList);
+        lb.addServers(serverList);
+        lb.getLoadBalancerStats().getServerStats().forEach((server, serverStats) -> {
+            request(serverStats);
+        });
+        for (int i = 0; i < 10; i++) {
+            System.out.println(lb.chooseServer(null));
+        }
+    }
+
     /**
      * 单独线程模拟刷页面，获取监控到的数据
      * @param lbs
@@ -248,6 +350,10 @@ public class RibbonClientApplication {
         new Thread(() -> {
             ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
             executorService.scheduleWithFixedDelay(() -> {
+                // 打印当前可用区
+                // 获取可用区
+                Set<String> availableZones = ZoneAvoidanceRule.getAvailableZones(lbs, 0.2d, 0.99999d);
+                System.out.println("=====当前可用区为：" + availableZones);
                 zones.forEach(zone -> {
                     System.out.println("区域[" + zone + "]概要：");
                     int instanceCount = lbs.getInstanceCount(zone);
