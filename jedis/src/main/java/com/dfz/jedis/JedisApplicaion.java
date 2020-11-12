@@ -3,6 +3,7 @@ package com.dfz.jedis;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.Pipeline;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,17 +28,18 @@ public class JedisApplicaion {
         Jedis jedis = new Jedis("localhost");
         jedisApplicaion.setJedis(jedis);
 
-        JedisPoolConfig poolConfig = new JedisPoolConfig();
-        poolConfig.setMaxTotal(8);
-        poolConfig.setMaxIdle(0);
-        poolConfig.setTestOnBorrow(true);
-        JedisPool jedisPool = new JedisPool(poolConfig, "localhost");
-        jedisApplicaion.setPool(jedisPool);
-
-        jedisApplicaion.testPool();
+//        JedisPoolConfig poolConfig = new JedisPoolConfig();
+//        poolConfig.setMaxTotal(8);
+//        poolConfig.setMaxIdle(0);
+//        poolConfig.setTestOnBorrow(true);
+//        JedisPool jedisPool = new JedisPool(poolConfig, "localhost");
+//        jedisApplicaion.setPool(jedisPool);
+//
+//        jedisApplicaion.testPool();
+        jedisApplicaion.testPipeline();
 
         jedisApplicaion.getJedis().close();
-        jedisApplicaion.getPool().close();
+//        jedisApplicaion.getPool().close();
     }
 
     /**
@@ -133,6 +135,17 @@ public class JedisApplicaion {
         System.out.println(jedis.sismember("sname", "meepo"));//判断 meepo 是否是sname集合的元素
         System.out.println(jedis.srandmember("sname"));
         System.out.println(jedis.scard("sname"));//返回集合的元素个数
+    }
+
+    public void testPipeline() {
+        Pipeline pipeline = jedis.pipelined();
+        int count = 5000;
+        for (int i = 0; i < count; i++) {
+            String key = "key-" + (i + 1);
+            String value = "value-" + (i + 1);
+            pipeline.set(key, value);
+        }
+        pipeline.syncAndReturnAll();
     }
 
     public void testPool() throws InterruptedException {

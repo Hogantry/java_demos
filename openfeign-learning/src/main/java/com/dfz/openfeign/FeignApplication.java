@@ -1,6 +1,7 @@
 package com.dfz.openfeign;
 
 import com.dfz.openfeign.client.DemoClient;
+import com.dfz.openfeign.client.DemoClient2;
 import com.dfz.openfeign.client.ParamClient;
 import com.dfz.openfeign.client.RequestLineClient;
 import feign.Feign;
@@ -24,11 +25,12 @@ import java.util.Map;
 public class FeignApplication {
 
     public static void main(String[] args) {
-//        DemoClient demoClient = Feign.builder().target(DemoClient.class, "http://localhost:8080");
+        DemoClient demoClient = Feign.builder().target(DemoClient.class, "http://localhost:8080");
+        DemoClient2 demoClient2 = Feign.builder().target(DemoClient2.class, "http://localhost:8080");
 //        String result = demoClient.getDate("2020-08-01");
 //        System.out.println(result);
 
-        feignFirstStep();
+//        feignFirstStep();
 //        testParam();
 //        testTemplate();
 
@@ -55,6 +57,10 @@ public class FeignApplication {
     private static void testTemplate() {
 //        UriTemplate uriTemplate = UriTemplate.create("/local-date/{date}?date={date}", StandardCharsets.UTF_8);
 //        System.out.println(uriTemplate.toString());
+//        HashMap<String, String> map = new HashMap<>();
+//        map.put("date", "2020-20-20");
+//        String expand = uriTemplate.expand(map);
+//        System.out.println(expand);
 
         QueryTemplate queryTemplate = QueryTemplate.create("{name}", Arrays.asList("{me}", "{her}"),
                 StandardCharsets.UTF_8);

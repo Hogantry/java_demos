@@ -33,7 +33,6 @@ public class NioServer {
         selector = Selector.open();
         // 注册 Server Socket Channel 到 Selector
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-//        SocketChannel accept = serverSocketChannel.accept();
         System.out.println("Server 启动完成");
 
         handleKeys();
