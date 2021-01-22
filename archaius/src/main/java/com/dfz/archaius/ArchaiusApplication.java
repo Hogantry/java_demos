@@ -22,8 +22,10 @@ public class ArchaiusApplication {
 //        System.out.println(myAge);
 //        System.out.println(myAge.get());
 
-        func2();
-
+//        func1();
+//        func2();
+        DynamicPropertyFactory.getInstance();
+        while (true) {}
     }
 
     public static void func1() throws InterruptedException {

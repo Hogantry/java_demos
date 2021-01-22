@@ -1,6 +1,6 @@
 package com.dfz.dubbo.adaptive;
 
-import com.alibaba.dubbo.common.URL;
+import org.apache.dubbo.common.URL;
 
 /**
  * @ClassName CloudAdaptiveExt

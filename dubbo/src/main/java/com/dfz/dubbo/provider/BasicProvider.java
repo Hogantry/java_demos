@@ -4,6 +4,7 @@ package com.dfz.dubbo.provider;
 import com.dfz.dubbo.provider.api.IDemoService;
 import com.dfz.dubbo.provider.impl.DemoServiceImpl;
 import org.apache.dubbo.config.ServiceConfig;
+import org.apache.dubbo.container.Main;
 
 import java.io.IOException;
 
@@ -27,8 +28,9 @@ public class BasicProvider {
         service.setRef(demoService);
         service.setVersion("1.0.0");
         // 暴露及注册服务
-        service.export();
-        System.in.read();
+//        service.export();
+        Main.main(new String[]{});
+//        System.in.read();
 
     }
 

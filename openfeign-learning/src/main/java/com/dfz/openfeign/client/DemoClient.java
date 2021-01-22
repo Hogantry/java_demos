@@ -1,6 +1,7 @@
 package com.dfz.openfeign.client;
 
 import feign.Param;
+import feign.Request;
 import feign.RequestLine;
 
 /**
@@ -14,7 +15,7 @@ import feign.RequestLine;
 public interface DemoClient {
 
     @RequestLine("GET /local-date/date?date={date}")
-    String getDate(@Param("date") String date);
+    String getDate(@Param("date") String date, Request.Options options);
 
     @RequestLine("GET /local-date/date?date={date}")
     <T> T getDate2(@Param("date")T date);

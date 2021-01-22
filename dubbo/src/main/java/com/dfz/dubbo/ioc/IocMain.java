@@ -1,8 +1,7 @@
 package com.dfz.dubbo.ioc;
 
-import com.alibaba.dubbo.common.extension.DisableInject;
-import com.alibaba.dubbo.common.extension.ExtensionLoader;
-import com.alibaba.dubbo.rpc.Protocol;
+import org.apache.dubbo.common.extension.ExtensionLoader;
+import org.apache.dubbo.rpc.Protocol;
 
 /**
  * @ClassName IocMain

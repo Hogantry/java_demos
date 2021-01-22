@@ -1,7 +1,7 @@
 package com.dfz.dubbo.adaptive;
 
-import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.extension.ExtensionLoader;
+import org.apache.dubbo.common.URL;
+import org.apache.dubbo.common.extension.ExtensionLoader;
 
 /**
  * @ClassName AdaptiveTest

@@ -1,8 +1,8 @@
 package com.dfz.dubbo.adaptive;
 
-import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.extension.Adaptive;
-import com.alibaba.dubbo.common.extension.SPI;
+import org.apache.dubbo.common.URL;
+import org.apache.dubbo.common.extension.Adaptive;
+import org.apache.dubbo.common.extension.SPI;
 
 /**
  * @ClassName AdaptiveExt

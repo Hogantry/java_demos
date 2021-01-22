@@ -1,7 +1,7 @@
 package com.dfz.dubbo.adaptive;
 
-import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.extension.Adaptive;
+
+import org.apache.dubbo.common.URL;
 
 /**
  * @ClassName ThriftAdaptiveExt
