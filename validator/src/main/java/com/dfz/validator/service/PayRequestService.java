@@ -14,6 +14,6 @@ import javax.validation.constraints.NotNull;
  **/
 public interface PayRequestService {
 
-    public @NotNull PayRequestDto getOne(@NotNull @Min(1) Integer id, String name) throws NoSuchMethodException;
+    @NotNull PayRequestDto getOne(@NotNull @Min(1) Integer id, String name) throws NoSuchMethodException;
 
 }
