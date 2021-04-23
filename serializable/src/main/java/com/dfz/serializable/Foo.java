@@ -65,19 +65,19 @@ class Foo2 extends Foo1 {
 
     private static final long serialVersionUID = -2819356655670307311L;
     private String foo2Address;
-//    private String foo2Name;
-//
-//    public Foo2() {
-//        System.out.println("Foo2...");
-//    }
-//
-//    public String getFoo2Name() {
-//        return foo2Name;
-//    }
-//
-//    public void setFoo2Name(String foo2Name) {
-//        this.foo2Name = foo2Name;
-//    }
+    private String foo2Name;
+
+    public Foo2() {
+        System.out.println("Foo2...");
+    }
+
+    public String getFoo2Name() {
+        return foo2Name;
+    }
+
+    public void setFoo2Name(String foo2Name) {
+        this.foo2Name = foo2Name;
+    }
 
     public String getFoo2Address() {
         return foo2Address;

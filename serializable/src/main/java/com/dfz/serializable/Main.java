@@ -7,10 +7,13 @@ import java.io.*;
  * 接口，但父类未实现，则父类不可被序列化，且子类被序列化的时候不会序列化父类属性。反序列化时，由于父类没有实现序列化接口，所以会调用父类的
  * 构造函数，初始化父类属性。
  *
+ * 子类必须也指定serialVersionUID字段，避免出现修改字段导致反序列化异常。
+ *
  * 序列化 (Serialization)是将对象的状态信息转换为可以存储或传输的形式的过程。其实就是把对象保存起来，反序列化就是把这个过程反过来，直接将序列化
  * 时生成的对象状态信息映射到内存中，不会调用类的构造方法来实例化对象。
  *
  * 实现{@link Serializable}接口的类，必须指定serialVersionUID，这样在出现类信息变更时，可以向下兼容。
+ * 删除字段，在反序列化时会忽略该字段；新加字段，在反序列化时会默认初始化该字段为零值。
  *
  * @ClassName Main
  * @Description Main
@@ -21,6 +24,13 @@ import java.io.*;
 public class Main {
 
     public static void main(String[] args) {
+
+        Object a = "a";
+        String aa = (String) a;
+
+        Object[] b = {"a", "b"};
+        String[] bb = (String[]) b;
+
 //        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("foo2.obj"))) {
 //            Foo2 foo2 = new Foo2();
 //            foo2.setFooName("fooName");
@@ -34,18 +44,18 @@ public class Main {
 //        }
 //
 //        System.out.println("------------------- Foo2");
-
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("foo2.obj"))) {
-            Foo2 foo2 = (Foo2)inputStream.readObject();
-            System.out.println(foo2);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+//
+//        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("foo2.obj"))) {
+//            Foo2 foo2 = (Foo2)inputStream.readObject();
+//            System.out.println(foo2);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
 //        System.out.println("------------------- Bar2");
 //
 //        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("bar2.obj"))) {
@@ -59,19 +69,19 @@ public class Main {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-//
-//        System.out.println("-------------------");
-//
-//        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("bar2.obj"))) {
-//            Bar2 bar2 = (Bar2)inputStream.readObject();
-//            System.out.println(bar2);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
+
+        System.out.println("-------------------");
+
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("bar2.obj"))) {
+            Bar2 bar2 = (Bar2)inputStream.readObject();
+            System.out.println(bar2);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

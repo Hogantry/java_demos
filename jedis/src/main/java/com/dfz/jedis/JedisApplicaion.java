@@ -145,7 +145,8 @@ public class JedisApplicaion {
             String value = "value-" + (i + 1);
             pipeline.set(key, value);
         }
-        pipeline.syncAndReturnAll();
+        List<Object> objects = pipeline.syncAndReturnAll();
+        System.out.println(objects);
     }
 
     public void testPool() throws InterruptedException {

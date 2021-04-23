@@ -61,24 +61,45 @@ class Bar1 extends Bar {
 
 class Bar2 extends Bar1 implements Serializable {
 
-    private String bar2Name;
+    private static final long serialVersionUID = 9001647507666295131L;
+//    private String bar2Name;
+    private String address;
+    private int age;
 
     public Bar2() {
         System.out.println("Bar2...");
     }
 
-    public String getBar2Name() {
-        return bar2Name;
+    public String getAddress() {
+        return address;
     }
 
-    public void setBar2Name(String bar2Name) {
-        this.bar2Name = bar2Name;
+    public void setAddress(String address) {
+        this.address = address;
     }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    //    public String getBar2Name() {
+//        return bar2Name;
+//    }
+//
+//    public void setBar2Name(String bar2Name) {
+//        this.bar2Name = bar2Name;
+//    }
 
     @Override
     public String toString() {
         return "Bar2{" +
-                "bar2Name='" + bar2Name + '\'' +
+//                "bar2Name='" + bar2Name + '\'' +
+                "address='" + address + '\'' +
+                "age='" + age + '\'' +
                 '}' + "Bar1{" +
                 "bar1Name='" + getBar1Name() + '\'' +
                 '}' + "Bar{" +

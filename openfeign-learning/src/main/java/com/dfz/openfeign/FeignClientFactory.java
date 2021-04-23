@@ -3,6 +3,7 @@ package com.dfz.openfeign;
 import feign.Feign;
 import feign.Logger;
 import feign.Retryer;
+import feign.hystrix.HystrixFeign;
 
 /**
  * @version V1.0
@@ -15,11 +16,17 @@ import feign.Retryer;
 public abstract class FeignClientFactory {
 
     static <T> T create(Class<T> clazz) {
-        return Feign.builder()
+//        return Feign.builder()
+//                .logger(new Logger.ErrorLogger()).logLevel(Logger.Level.FULL)
+//                .retryer(Retryer.NEVER_RETRY)
+//                .decode404()
+//                .target(clazz, "http://localhost:8080");
+        HystrixFeign.builder()
                 .logger(new Logger.ErrorLogger()).logLevel(Logger.Level.FULL)
                 .retryer(Retryer.NEVER_RETRY)
                 .decode404()
                 .target(clazz, "http://localhost:8080");
+        return null;
     }
 
 }

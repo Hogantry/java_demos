@@ -45,7 +45,7 @@ public class ConsumerMain {
                 channel.basicAck(envelope.getDeliveryTag(), false);
             }
         };
-        channel.basicConsume(QUEUE_NAME, consumer);
+        channel.basicConsume(QUEUE_NAME, false, consumer);
         TimeUnit.SECONDS.sleep(5);
         channel.close();
         connection.close();

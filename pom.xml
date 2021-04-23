@@ -48,6 +48,8 @@
         <module>archaius</module>
         <module>hystrix-learning</module>
         <module>spring-aop</module>
+        <module>stream</module>
+        <module>proxy</module>
     </modules>
 
     <properties>
@@ -255,6 +257,12 @@
             </dependency>
 
             <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-hystrix</artifactId>
+                <version>${openfeign.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.netflix.hystrix</groupId>
                 <artifactId>hystrix-core</artifactId>
                 <version>${hystrix.version}</version>
@@ -319,6 +327,12 @@
                 <groupId>org.apache.lucene</groupId>
                 <artifactId>lucene-queryparser</artifactId>
                 <version>${lucene.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>3.1</version>
             </dependency>
 
         </dependencies>

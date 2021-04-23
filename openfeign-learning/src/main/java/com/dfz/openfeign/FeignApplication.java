@@ -27,8 +27,11 @@ import java.util.concurrent.TimeUnit;
 public class FeignApplication {
 
     public static void main(String[] args) {
-        DemoClient demoClient = Feign.builder().target(DemoClient.class, "http://localhost:8080");
-        demoClient.getDate("123", new Request.Options(20, TimeUnit.SECONDS, 70, TimeUnit.SECONDS, true));
+
+        DemoClient demoClient = FeignClientFactory.create(DemoClient.class);
+
+//        DemoClient demoClient = Feign.builder().target(DemoClient.class, "http://localhost:8080");
+//        demoClient.getDate("123", new Request.Options(20, TimeUnit.SECONDS, 70, TimeUnit.SECONDS, true));
 //        DemoClient2 demoClient2 = Feign.builder().target(DemoClient2.class, "http://localhost:8080");
 //        String result = demoClient.getDate("2020-08-01");
 //        System.out.println(result);
