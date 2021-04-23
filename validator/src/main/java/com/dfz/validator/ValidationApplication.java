@@ -43,7 +43,7 @@ import java.util.Set;
  *               2.0：新增内建的注解类型（共9个，Hibernate中的被移除）。 ---> Hibernate Validator 5.X
  *
  *               备注：el规范的api GAV是javax.el-api，tomcat默认对其有实现，而且tomcat默认支持的jsp的el表达式，即是该api的实现。tomcat-embed-el
- *               Java EE改名为Jakarta EE，所以新推出的jakarta.validation-api 3.0，与原来的2.0代码一模一样，只是改了报名。
+ *               Java EE改名为Jakarta EE，所以新推出的jakarta.validation-api 3.0，与原来的2.0代码一模一样，只是改了包名。
  *               Hibernate Validator 7.X依赖3.0的api，而6.x依赖的api为2.0，只是改了依赖的GAV，包名并没有改。
  *
  * @date: 2020/8/24 16:46
@@ -53,8 +53,8 @@ import java.util.Set;
 public class ValidationApplication {
 
     public static void main(String[] args) throws NoSuchMethodException {
-        validateJavaBean();
-//        validateMethod();
+//        validateJavaBean();
+        validateMethod();
     }
 
     /**
@@ -64,7 +64,7 @@ public class ValidationApplication {
         PayRequestDto dto = new PayRequestDto();
         dto.setPayTime("ad");
         Validator validator = getValidator();
-        // 3、校验Java Bean（解析注解） 返回校验结果
+        // 校验Java Bean（解析注解） 返回校验结果
         Set<ConstraintViolation<PayRequestDto>> result = validator.validate(dto);
         // 输出校验结果
         result.stream().map(v -> v.getPropertyPath() + " " + v.getMessage() + ": " + v.getInvalidValue()).forEach(System.out::println);
@@ -72,13 +72,13 @@ public class ValidationApplication {
 
     /**
      * 对方法的参数或返回值进行校验：
-     *  1. 如果该方法时从父类/接口继承而来的，则该方法不能加注解，所有的校验条件注解从父类/接口方法中获取
-     *  2. 如果该方法不是从接口继承而来，则该方法可以加注解。
+     *  1. 如果该方法时从父类/接口继承而来的，则该方法不能加注解，所有的校验条件注解从父类/接口方法中获取，或者该方法的注解与父类/接口方法中的注解完全一致
+     *  2. 如果该方法不是从父类/接口继承而来，则该方法可以加注解。
      * @throws NoSuchMethodException
      */
     private static void validateMethod() throws NoSuchMethodException {
         PayRequestServiceImpl payRequestService = new PayRequestServiceImpl();
-        payRequestService.getOne(1, "DFZ");
+        payRequestService.getOne(0, "DFZ");
     }
 
     /**
