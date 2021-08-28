@@ -23,6 +23,7 @@ public class Application {
     public static final Object object = new Object();
 
     public static void main(String[] args) throws InterruptedException {
+        Application application = new Application();
         for (int i = 0; i < THREAD_SIZE; i++) {
             new Thread(() -> {
                 try {
@@ -33,7 +34,10 @@ public class Application {
                     e.printStackTrace();
                 }
                 try {
-                    Application.incra();
+//                    线程不安全
+//                    application.incrb();
+//                    Application.incra();
+                    Application.incra1();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -71,7 +75,7 @@ public class Application {
     }
 
     public static int incra1() throws InterruptedException {
-        TimeUnit.MICROSECONDS.sleep(100);
+        TimeUnit.MICROSECONDS.sleep(1);
         synchronized (object) {
             return ++a;
         }

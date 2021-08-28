@@ -16,6 +16,7 @@ import java.lang.annotation.Annotation;
 public class AnnotationApplication {
 
     public static void main(String[] args) {
+        System.out.println(AnnotationApplication.class.getClassLoader());
         Annotation[] annotations = Bar.class.getAnnotations();
 
         for (Annotation annotation : annotations) {
@@ -35,6 +36,18 @@ public class AnnotationApplication {
             System.out.println("annotation: " + annotation.annotationType());
         }
 
+        System.out.println(new AnnotationApplication().toBeModified());
+
+        new Thread(() -> {
+            System.out.println("hello bytebuddy agent by DFZ");
+            for (int i=0; i < 10000L; i++) {
+
+            }
+        }, "DFZ").start();
+    }
+
+    public String toBeModified() {
+        return "toBeModified";
     }
 
 }

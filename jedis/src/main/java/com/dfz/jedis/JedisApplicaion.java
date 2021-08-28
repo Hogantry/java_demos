@@ -4,6 +4,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Pipeline;
+import redis.clients.jedis.Transaction;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,18 +29,29 @@ public class JedisApplicaion {
         Jedis jedis = new Jedis("localhost");
         jedisApplicaion.setJedis(jedis);
 
-//        JedisPoolConfig poolConfig = new JedisPoolConfig();
-//        poolConfig.setMaxTotal(8);
-//        poolConfig.setMaxIdle(0);
-//        poolConfig.setTestOnBorrow(true);
-//        JedisPool jedisPool = new JedisPool(poolConfig, "localhost");
-//        jedisApplicaion.setPool(jedisPool);
-//
-//        jedisApplicaion.testPool();
-        jedisApplicaion.testPipeline();
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        poolConfig.setMaxTotal(8);
+        poolConfig.setMaxIdle(0);
+        poolConfig.setTestOnBorrow(true);
+        JedisPool jedisPool = new JedisPool(poolConfig, "localhost");
+        jedisApplicaion.setPool(jedisPool);
 
-        jedisApplicaion.getJedis().close();
-//        jedisApplicaion.getPool().close();
+        jedisApplicaion.testPool();
+//        jedisApplicaion.testPipeline();
+//        jedisApplicaion.testMutil();
+
+//        jedisApplicaion.getJedis().close();
+        jedisApplicaion.getPool().close();
+    }
+
+    /**
+     * Redis事务
+     */
+    public void testMutil() {
+        Transaction transaction = jedis.multi();
+        Transaction multi = jedis.multi();
+        System.out.println(transaction);
+//        System.out.println(multi);
     }
 
     /**

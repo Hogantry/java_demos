@@ -9,20 +9,27 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>annotation</artifactId>
+    <artifactId>agent</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy-agent</artifactId>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-<!--      打包本项目类，但不会将依赖的jar包等一并打包成可执行的jar文件      -->
 <!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
 <!--                <artifactId>maven-jar-plugin</artifactId>-->
 <!--                <version>3.0.2</version>-->
 <!--                <configuration>-->
@@ -31,7 +38,11 @@
 <!--                            <addClasspath>true</addClasspath>-->
 <!--                        </manifest>-->
 <!--                        <manifestEntries>-->
-<!--                            <Main-Class>com.dfz.annotation.AnnotationApplication</Main-Class>-->
+<!--&lt;!&ndash;                            <Premain-Class>com.dfz.agent.PreMainAgent</Premain-Class>&ndash;&gt;-->
+<!--                            <Premain-Class>com.dfz.agent.ByteBuddyAgentMain</Premain-Class>-->
+<!--                            <Boot-Class-Path>${project.artifactId}-${project.version}.jar</Boot-Class-Path>-->
+<!--                            <Can-Redefine-Classes>true</Can-Redefine-Classes>-->
+<!--                            <Can-Retransform-Classes>true</Can-Retransform-Classes>-->
 <!--                        </manifestEntries>-->
 <!--                    </archive>-->
 <!--                </configuration>-->
@@ -47,8 +58,15 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.dfz.annotation.AnnotationApplication</mainClass>
+                            <addClasspath>true</addClasspath>
                         </manifest>
+                        <manifestEntries>
+<!--                            <Premain-Class>com.dfz.agent.PreMainAgent</Premain-Class>-->
+                            <Premain-Class>com.dfz.agent.ByteBuddyAgentMain</Premain-Class>
+                            <Boot-Class-Path>${project.artifactId}-${project.version}.jar</Boot-Class-Path>
+                            <Can-Redefine-Classes>true</Can-Redefine-Classes>
+                            <Can-Retransform-Classes>true</Can-Retransform-Classes>
+                        </manifestEntries>
                     </archive>
                 </configuration>
                 <executions>
@@ -63,6 +81,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

@@ -3,15 +3,11 @@ package com.dfz.classloader;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.net.URLStreamHandler;
 
 /**
  * @ClassName Main
  * @Description 用户自定义的ClassLoader，其默认的parent ClassLoader就是系统ClassLoader。继承关系如下
- *              DIY classLoader -> AppClassLoader -> ExtClassLoader -> SystemClassLoader
+ *              DIY classLoader -> AppClassLoader(SystemClassLoader) -> ExtensionClassLoader -> BootstrapClassLoader
  *              user.dir 当前项目（编译后的class文件）所在的目录（类所在包所在的目录）。
  * @Author dfz
  * @Date 2019-09-02 09:15
@@ -29,6 +25,8 @@ public class Main {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
 
+        System.out.println(ClassLoader.getSystemClassLoader());
+
 //        URL[] urls = new URL[1];
 //        URLStreamHandler streamHandler = null;
 //        File classPath = new File(WEB_ROOT);
@@ -42,13 +40,13 @@ public class Main {
 //        }
 
         // 需要先编译好spring-autowired项目
-        String classPath = "/Users/dfz/J2EE/java_demos/spring-autowired/target/classes/";
-        MyClassLoader myClassLoader = new MyClassLoader(classPath);
-        String clazzName = "com.dfz.spring.autowired.config.HelloConfig";
-        Class<?> loadClass = myClassLoader.loadClass(clazzName);
-        Method helloDao = loadClass.getDeclaredMethod("helloDao");
-        Object o = loadClass.newInstance();
-        Object invoke = helloDao.invoke(o);
+//        String classPath = "/Users/dfz/J2EE/java_demos/spring-autowired/target/classes/";
+//        MyClassLoader myClassLoader = new MyClassLoader(classPath);
+//        String clazzName = "com.dfz.spring.autowired.config.HelloConfig";
+//        Class<?> loadClass = myClassLoader.loadClass(clazzName);
+//        Method helloDao = loadClass.getDeclaredMethod("helloDao");
+//        Object o = loadClass.newInstance();
+//        Object invoke = helloDao.invoke(o);
     }
 
 }

@@ -20,9 +20,12 @@ public class JdkProxy implements InvocationHandler {
     private Object target;
 
     public static void main(String[] args) {
+        // 1、生成$Proxy0的class文件
+        System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
         JdkProxy jdkProxy = new JdkProxy();
         UserManager user = (UserManager) jdkProxy.getJDKProxy(new UserManagerImpl());
-        System.out.println(user);
+        // 直接调用代理类的toString方法，
+//        System.out.println(user);
         user.addUser("admin", "123123");
     }
 
@@ -36,7 +39,13 @@ public class JdkProxy implements InvocationHandler {
      */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println(method);
+        // 这里的proxy就是代理对象
+        // 这里的method是接口类的Method对象
+
+        // 这里打印proxy，则调用toString方法，会产生死循环，在invoke方法中调用proxy任意方法，都得注意死循环的问题
+//        System.out.println("proxy:" + proxy);
+        System.out.println("proxy:" + proxy.getClass().getName());
+        System.out.println("method: " + method.getDeclaringClass().getName());
         System.out.println("JDK动态代理，监听开始！");
         Object result = method.invoke(target, args);
         System.out.println("JDK动态代理，监听结束！");

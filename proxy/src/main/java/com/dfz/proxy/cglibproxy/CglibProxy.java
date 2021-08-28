@@ -2,6 +2,7 @@ package com.dfz.proxy.cglibproxy;
 
 import com.dfz.proxy.service.UserManager;
 import com.dfz.proxy.service.impl.UserManagerImpl;
+import net.sf.cglib.core.DebuggingClassWriter;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -21,6 +22,8 @@ public class CglibProxy implements MethodInterceptor {
     private Object target;
 
     public static void main(String[] args) {
+        // 1、生成 UserManagerImpl$$EnhancerByCGLIB$$cf438cc0 的class文件
+        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "D:\\class");
         CglibProxy cglib = new CglibProxy();
         UserManager user =  (UserManager) cglib.getCglibProxy(new UserManagerImpl());
         user.delUser("admin");
@@ -37,6 +40,16 @@ public class CglibProxy implements MethodInterceptor {
      */
     @Override
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+        // 这里的o就是代理对象
+        // 这里的method是被代理类的Method对象，这里就是 UserManagerImpl 中的Method
+
+        // 这里打印o，则调用toString方法，会产生死循环，在invoke方法中调用o任意方法，都得注意死循环的问题
+//        System.out.println("o:" + o);
+
+        System.out.println("proxy:" + o.getClass().getName());
+        System.out.println("method: " + method.getDeclaringClass().getName());
+        System.out.println("methodProxy: " + methodProxy.getClass().getName());
+
         System.out.println("Cglib动态代理，监听开始！");
 //        Object invoke = method.invoke(target, objects);
         // 上下两个方法执行结果一致

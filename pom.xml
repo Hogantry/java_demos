@@ -24,7 +24,6 @@
         <module>netty</module>
         <module>kafka</module>
         <module>jedis</module>
-        <module>lettuce</module>
         <module>spring-test</module>
         <module>completable-future</module>
         <module>forkjoinpool</module>
@@ -50,6 +49,11 @@
         <module>spring-aop</module>
         <module>stream</module>
         <module>proxy</module>
+        <module>fastjson</module>
+        <module>jol-core</module>
+        <module>spring-event</module>
+        <module>agent</module>
+        <module>byte-buddy</module>
     </modules>
 
     <properties>
@@ -83,6 +87,9 @@
         <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
         <tomcat-embed-el.version>9.0.22</tomcat-embed-el.version>
         <lucene.version>8.6.1</lucene.version>
+        <lombok.version>1.18.10</lombok.version>
+        <bytebuddy.version>1.11.12</bytebuddy.version>
+        <bytebuddyagent.version>1.11.12</bytebuddyagent.version>
     </properties>
 
     <dependencyManagement>
@@ -329,13 +336,62 @@
             </dependency>
 
             <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>${bytebuddy.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy-agent</artifactId>
+                <version>${bytebuddyagent.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>cglib</groupId>
                 <artifactId>cglib</artifactId>
                 <version>3.1</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.35</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.openjdk.jol/jol-core -->
+            <dependency>
+                <groupId>org.openjdk.jol</groupId>
+                <artifactId>jol-core</artifactId>
+                <version>0.16</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.31</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <!-- Junit依赖 用于单元测试-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 </project>
