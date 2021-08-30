@@ -54,6 +54,7 @@
         <module>spring-event</module>
         <module>agent</module>
         <module>byte-buddy</module>
+        <module>sentinel</module>
     </modules>
 
     <properties>
@@ -365,7 +366,16 @@
                 <artifactId>jol-core</artifactId>
                 <version>0.16</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-core</artifactId>
+                <version>1.8.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-transport-simple-http</artifactId>
+                <version>1.8.2</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
