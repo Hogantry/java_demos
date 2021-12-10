@@ -19,7 +19,7 @@ public class Consumer {
         consumer.setNamesrvAddr("localhost:9876");
         consumer.subscribe("TopicTest","*");
         consumer.registerMessageListener((MessageListenerConcurrently) (list, consumeConcurrentlyContext) -> {
-            System.out.printf("%s Receive New Messages: %s %n", Thread.currentThread().getName(), list);
+            System.out.printf("%s Receive New Messages: %s list size：%s %n", Thread.currentThread().getName(), list, list.size());
             return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
         });
         consumer.start();

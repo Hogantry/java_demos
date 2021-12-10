@@ -61,7 +61,7 @@
                             <addClasspath>true</addClasspath>
                         </manifest>
                         <manifestEntries>
-<!--                            <Premain-Class>com.dfz.agent.PreMainAgent</Premain-Class>-->
+                            <Premain-Class>com.dfz.agent.PreMainAgent</Premain-Class>
                             <Premain-Class>com.dfz.agent.ByteBuddyAgentMain</Premain-Class>
                             <Boot-Class-Path>${project.artifactId}-${project.version}.jar</Boot-Class-Path>
                             <Can-Redefine-Classes>true</Can-Redefine-Classes>

@@ -1,9 +1,6 @@
 package com.dfz.annotation;
 
-import com.dfz.annotation.common.Bar;
-import org.springframework.core.annotation.AnnotationUtils;
-
-import java.lang.annotation.Annotation;
+import com.dfz.annotation.common.IUservice;
 
 /**
  * @version V1.0
@@ -16,39 +13,50 @@ import java.lang.annotation.Annotation;
 public class AnnotationApplication {
 
     public static void main(String[] args) {
-        System.out.println(AnnotationApplication.class.getClassLoader());
-        Annotation[] annotations = Bar.class.getAnnotations();
 
-        for (Annotation annotation : annotations) {
-            Class<? extends Annotation> annotationType = annotation.annotationType();
-            System.out.println("annotation: " + annotationType);
-            Annotation[] annotations1 = annotationType.getAnnotations();
-            for (Annotation annotation1 : annotations1) {
-                System.out.println("annotation1: " + annotation1.annotationType());
+        IUservice iUservice = new IUservice() {
+
+            @Override
+            public String sayHello() {
+                return null;
             }
-            System.out.println("--------------------");
-        }
+        };
 
-        System.out.println("++++++++++++++++++++");
-
-        Annotation[] annotationsSpring = AnnotationUtils.getAnnotations(Bar.class);
-        for (Annotation annotation : annotationsSpring) {
-            System.out.println("annotation: " + annotation.annotationType());
-        }
-
-        System.out.println(new AnnotationApplication().toBeModified());
-
-        new Thread(() -> {
-            System.out.println("hello bytebuddy agent by DFZ");
-            for (int i=0; i < 10000L; i++) {
-
-            }
-        }, "DFZ").start();
+        iUservice.sayHello();
+//        System.out.println("******************");
+//        System.out.println(AnnotationApplication.class.getClassLoader());
+//        Annotation[] annotations = Bar.class.getAnnotations();
+//
+//        for (Annotation annotation : annotations) {
+//            Class<? extends Annotation> annotationType = annotation.annotationType();
+//            System.out.println("annotation: " + annotationType);
+//            Annotation[] annotations1 = annotationType.getAnnotations();
+//            for (Annotation annotation1 : annotations1) {
+//                System.out.println("annotation1: " + annotation1.annotationType());
+//            }
+//            System.out.println("--------------------");
+//        }
+//
+//        System.out.println("++++++++++++++++++++");
+//
+//        Annotation[] annotationsSpring = AnnotationUtils.getAnnotations(Bar.class);
+//        for (Annotation annotation : annotationsSpring) {
+//            System.out.println("annotation: " + annotation.annotationType());
+//        }
+//
+//        System.out.println(new AnnotationApplication().toBeModified());
+//
+//        new Thread(() -> {
+//            System.out.println("hello bytebuddy agent by DFZ");
+//            for (int i=0; i < 10000L; i++) {
+//
+//            }
+//        }, "DFZ").start();
     }
-
-    public String toBeModified() {
-        return "toBeModified";
-    }
+//
+//    public String toBeModified() {
+//        return "toBeModified";
+//    }
 
 }
 

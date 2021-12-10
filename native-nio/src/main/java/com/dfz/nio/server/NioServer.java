@@ -5,10 +5,12 @@ import com.dfz.nio.util.CodecUtil;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.*;
-import java.util.ArrayList;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * @version V1.0
@@ -46,7 +48,6 @@ public class NioServer {
             if (selectNums == 0) {
                 continue;
             }
-            System.out.println("选择 Channel 数量：" + selectNums);
 
             // 遍历可选择的 Channel 的 SelectionKey 集合
             Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
@@ -73,10 +74,6 @@ public class NioServer {
         if (key.isReadable()) {
             handleReadableKey(key);
         }
-        // 写就绪
-        if (key.isWritable()) {
-            handleWritableKey(key);
-        }
     }
 
     private void handleAcceptableKey(SelectionKey key) throws IOException {
@@ -86,11 +83,10 @@ public class NioServer {
         clientSocketChannel.configureBlocking(false);
         // log
         System.out.println("接受新的 Channel");
+        clientSocketChannel.write(ByteBuffer.wrap("欢迎链接到server".getBytes(StandardCharsets.UTF_8)));
         // 注册 Client Socket Channel 到 Selector
-        ArrayList<String> list = new ArrayList<>();
-        list.forEach(System.out::println);
-        list.add("欢迎链接我");
-        clientSocketChannel.register(selector, SelectionKey.OP_WRITE, list);
+        clientSocketChannel.register(selector, SelectionKey.OP_READ);
+
     }
 
     private void handleReadableKey(SelectionKey key) throws IOException {
@@ -100,8 +96,8 @@ public class NioServer {
         ByteBuffer readBuffer = CodecUtil.read(clientSocketChannel);
         // 处理连接已经断开的情况
         if (readBuffer == null) {
+            key.cancel();
             System.out.println("断开 Channel");
-            clientSocketChannel.register(selector, 0);
             return;
         }
         // 打印数据
@@ -109,31 +105,8 @@ public class NioServer {
             String content = CodecUtil.newString(readBuffer);
             System.out.println("读取数据：" + content);
 
-            // 添加到响应队列
-            List<String> responseQueue = (ArrayList<String>) key.attachment();
-            responseQueue.add("响应：" + content);
-            // 注册 Client Socket Channel 到 Selector
-            clientSocketChannel.register(selector, SelectionKey.OP_WRITE, key.attachment());
+            clientSocketChannel.write(ByteBuffer.wrap(content.getBytes(StandardCharsets.UTF_8)));
         }
-    }
-
-    @SuppressWarnings("Duplicates")
-    private void handleWritableKey(SelectionKey key) throws ClosedChannelException {
-        // Client Socket Channel
-        SocketChannel clientSocketChannel = (SocketChannel) key.channel();
-
-        // 遍历响应队列
-        List<String> responseQueue = (ArrayList<String>) key.attachment();
-        for (String content : responseQueue) {
-            // 打印数据
-            System.out.println("写入数据：" + content);
-            // 返回
-            CodecUtil.write(clientSocketChannel, content);
-        }
-        responseQueue.clear();
-
-        // 注册 Client Socket Channel 到 Selector
-        clientSocketChannel.register(selector, SelectionKey.OP_READ, responseQueue);
     }
 
     public static void main(String[] args) throws IOException {

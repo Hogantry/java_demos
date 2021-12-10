@@ -6,6 +6,7 @@ import net.bytebuddy.asm.Advice;
 import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.matcher.ElementMatchers;
+import net.bytebuddy.pool.TypePool;
 import net.bytebuddy.utility.JavaModule;
 
 import java.io.FileOutputStream;
@@ -23,7 +24,7 @@ import static net.bytebuddy.matcher.ElementMatchers.named;
  */
 public class ByteBuddyAgentMain {
 
-    public static void premain(String args, Instrumentation instrumentation) throws UnmodifiableClassException {
+    public static void premain(String args, Instrumentation instrumentation) throws UnmodifiableClassException, ClassNotFoundException {
 
         premain0(args, instrumentation);
         System.out.println("ByteBuddyAgentMain classLoad: " + ByteBuddyAgentMain.class.getClassLoader());
@@ -36,15 +37,18 @@ public class ByteBuddyAgentMain {
      * @param args
      * @param instrumentation
      */
-    public static void premain0(String args, Instrumentation instrumentation) {
+    public static void premain0(String args, Instrumentation instrumentation) throws ClassNotFoundException {
+        TypePool typePool = TypePool.Default.ofPlatformLoader();
+        TypeDescription resolve = typePool.describe("com.dfz.annotation.common.IUservice").resolve();
         new AgentBuilder.Default()
-                .type(named("com.dfz.annotation.AnnotationApplication"))
+//                .type(named("com.dfz.annotation.AnnotationApplication"))
+                .type(ElementMatchers.isSubTypeOf(resolve))
                 .transform(new AgentBuilder.Transformer() {
                     @Override
                     public DynamicType.Builder<?> transform(DynamicType.Builder<?> builder, TypeDescription typeDescription, ClassLoader classLoader, JavaModule module) {
 
 //                        DynamicType.Builder<?> builder1 = builder.method(named("toBeModified")).intercept(FixedValue.value("modified"));
-                        DynamicType.Builder<?> builder1 = builder.visit(Advice.to(LoggerAdvisor.class).on(named("toBeModified")));
+                        DynamicType.Builder<?> builder1 = builder.visit(Advice.to(LoggerAdvisor.class).on(named("sayHello")));
 
                         DynamicType.Unloaded<?> dynamicType = builder1.make();
                         String fileName = dynamicType.getTypeDescription().getSimpleName() + ".class";

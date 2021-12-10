@@ -1,6 +1,5 @@
 package com.dfz.annotation.common;
 
-import com.dfz.annotation.stereotype.ParentAnno;
 import com.dfz.annotation.stereotype.SunAnno;
 
 /**
@@ -13,5 +12,9 @@ import com.dfz.annotation.stereotype.SunAnno;
  */
 @SunAnno
 //@ParentAnno
-public class Bar {
+public class Bar implements IUservice {
+    @Override
+    public String sayHello() {
+        return null;
+    }
 }

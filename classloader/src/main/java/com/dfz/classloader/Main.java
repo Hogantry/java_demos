@@ -25,7 +25,7 @@ public class Main {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
 
-        System.out.println(ClassLoader.getSystemClassLoader());
+        System.out.println(ClassLoader.getSystemClassLoader().getParent().getClass());
 
 //        URL[] urls = new URL[1];
 //        URLStreamHandler streamHandler = null;
